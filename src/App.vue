@@ -7,7 +7,7 @@ import NavBar from './components/NavBar.vue'
 
 <template>
     <NavBar />
-    <Hero title="Test title" subtitle="Test subtitle" />
+    <Hero title="Vue jobs" subtitle="Test subtitle" />
     <HomeCards />
     <JobListings />
 </template>
