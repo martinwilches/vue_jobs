@@ -1,9 +1,21 @@
 <script setup>
+import { ref, computed } from 'vue'
+
 const props = defineProps({
     job: {
         type: Object,
-        default: {}
+        default: {},
+    },
+})
+
+const showFullDescription = ref(false)
+
+const truncatedDescription = computed(() => {
+    let description = props.job.description
+    if (!showFullDescription.value) { // se trunca la descripcion cuando se listan varios jobs
+        description = description.substring(0, 90) + '...'
     }
+    return description
 })
 </script>
 
@@ -18,12 +30,10 @@ const props = defineProps({
             </div>
 
             <div class="mb-5">
-                {{ job.description }}
+                {{ truncatedDescription }}
             </div>
 
-            <h3 class="text-green-500 mb-2">
-                {{ job.salary }}
-            </h3>
+            <h3 class="text-green-500 mb-2">{{ job.salary }} / Year</h3>
 
             <div class="border border-gray-100 mb-5"></div>
 
@@ -33,7 +43,7 @@ const props = defineProps({
                     {{ job.location }}
                 </div>
                 <a
-                    href="job.html"
+                    :href="`/job/${job.id}`"
                     class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"
                 >
                     Read More
