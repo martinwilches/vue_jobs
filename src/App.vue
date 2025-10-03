@@ -1,15 +1,10 @@
 <script setup>
-import Hero from './components/Hero.vue'
-import HomeCards from './components/HomeCards.vue'
-import JobListings from './components/JobListings.vue'
 import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
     <NavBar />
-    <Hero title="Vue jobs" subtitle="Test subtitle" />
-    <HomeCards />
-    <JobListings :limit="3" :showButton="true" />
+    <RouterView />
 </template>
 
 <!-- scoped // los estilos solo se aplican en el componente actual -->
