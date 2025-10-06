@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import JobsView from '@/views/JobsView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
+import JobView from '@/views/JobView.vue'
 
 const routes = [
     {
@@ -16,8 +17,13 @@ const routes = [
         component: JobsView,
     },
     {
+        path: '/jobs/:id',
+        name: 'job',
+        component: JobView
+    },
+    {
         path: '/:pathMatch(.*)*',
-        name: 'not_found',
+        name: 'not-found',
         component: NotFoundView,
     },
 ]
