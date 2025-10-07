@@ -23,8 +23,8 @@ onMounted(async () => {
     try {
         const { data } = await axios.get('/api/jobs')
         state.jobs = data
-    } catch (e) {
-        console.log('Error fetching jobs ', e)
+    } catch (error) {
+        console.error('Error fetching jobs: ', error)
     } finally {
         state.isLoading = false
     }
