@@ -4,6 +4,7 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import { onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import BackButton from '@/components/BackButton.vue'
 
 const route = useRoute()
 const job_id = route.params.id // obtener el id del job que se edita
@@ -15,7 +16,7 @@ const state = reactive({
 
 onMounted(async () => {
     try {
-        const { data } = await axios.get(`http://localhost:5000/jobs/${job_id}`)
+        const { data } = await axios.get(`/api/jobs/${job_id}`)
         state.job = data
     } catch (e) {
         console.log('Error fetching job ', e)
@@ -26,6 +27,7 @@ onMounted(async () => {
 </script>
 
 <template>
+    <BackButton />
     <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
         <PulseLoader />
     </div>
