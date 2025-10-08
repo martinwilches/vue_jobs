@@ -1,12 +1,16 @@
 <script setup>
-import { useToast } from 'vue-toastification'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
-import { useRouter } from 'vue-router'
-import { reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+import { reactive, onMounted } from 'vue'
 import axios from 'axios'
 
 const router = useRouter()
+const route = useRoute()
 const toast = useToast()
+
+const job_id = route.params.id
 
 const form = reactive({
     type: 'Full-Time',
@@ -22,9 +26,35 @@ const form = reactive({
     },
 })
 
+const state = reactive({
+    job: {},
+    isLoading: true,
+})
+
+onMounted(async () => {
+    try {
+        const { data } = await axios.get(`/api/jobs/${job_id}`)
+        state.job = data
+
+        form.type = state.job.type
+        form.title = state.job.title
+        form.description = state.job.description
+        form.salary = state.job.salary
+        form.location = state.job.location
+        form.company.name = state.job.company.name
+        form.company.description = state.job.company.description
+        form.company.contactEmail = state.job.company.contactEmail
+        form.company.contactPhone = state.job.company.contactPhone
+    } catch (error) {
+        console.error('Error fetching job: ', error)
+    } finally {
+        state.isLoading = false
+    }
+})
+
 const handleSubmit = async () => {
     try {
-        const newJob = {
+        const updateJob = {
             type: form.type,
             title: form.title,
             description: form.description,
@@ -38,13 +68,13 @@ const handleSubmit = async () => {
             },
         }
 
-        await axios.post(`/api/jobs`, newJob)
+        await axios.put(`/api/jobs/${job_id}`, updateJob)
 
-        toast.success('Job added successfully', {
+        toast.success('Job updated successfully', {
             timeout: 3000,
         })
 
-        router.push(`/jobs/${data.id}`)
+        router.push(`/jobs/${job_id}`)
     } catch (error) {
         console.error('Error creating the new job: ', error)
     }
@@ -54,12 +84,16 @@ const handleSubmit = async () => {
 <template>
     <section class="bg-green-50">
         <div class="container m-auto max-w-2xl py-24">
+            <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
+                <PulseLoader />
+            </div>
             <div
+                v-else
                 class="bg-white px-6 py-8 mb-4 shadow-xl rounded-md m-4 md:m-0"
             >
                 <form @submit.prevent="handleSubmit">
                     <h2 class="text-3xl text-center font-semibold mb-6">
-                        Add Job
+                        Update Job
                     </h2>
 
                     <div class="mb-4">
@@ -225,7 +259,7 @@ const handleSubmit = async () => {
                             class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
-                            Add Job
+                            Update Job
                         </button>
                     </div>
                 </form>

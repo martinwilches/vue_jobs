@@ -1,12 +1,12 @@
 <script setup>
 import { useToast } from 'vue-toastification'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-
-import { useRouter } from 'vue-router'
-import { onMounted, reactive } from 'vue'
-import { useRoute } from 'vue-router'
-import axios from 'axios'
 import BackButton from '@/components/BackButton.vue'
+
+import { useRoute, useRouter } from 'vue-router'
+import { onMounted, reactive } from 'vue'
+
+import axios from 'axios'
 
 const router = useRouter()
 const route = useRoute()
