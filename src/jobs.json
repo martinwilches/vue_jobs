@@ -125,6 +125,20 @@
         "contactEmail": "your.email+fakedata20912@gmail.com",
         "contactPhone": "915-735-7297"
       }
+    },
+    {
+      "id": "1782",
+      "type": "Part-Time",
+      "title": "Salvador Kunde",
+      "description": "Facilis quos minima deserunt.",
+      "salary": "$50K - $60K",
+      "location": "Gislason, Romaguera and Kautzer",
+      "company": {
+        "name": "Konopelski and Sons",
+        "description": "Nitzsche - Schinner",
+        "contactEmail": "your.email+fakedata11442@gmail.com",
+        "contactPhone": "172-065-4640"
+      }
     }
   ]
 }
